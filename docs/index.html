@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub Portfolio Showcase · NimmaSsathi</title>
+  <meta name="description" content="Type any GitHub username and instantly see their public projects as a clean portfolio. No login, no token, no backend.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c2410c'/%3E%3Cpath d='M9 23V9l14 14V9' fill='none' stroke='white' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+  <script>
+    /* Apply a saved theme before first paint to avoid a flash. */
+    try { var t = localStorage.getItem('nimmassathi:theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="NimmaSsathi – GitHub Portfolio Showcase, home">
+      <span class="brand-mark" aria-hidden="true">N</span>
+      <span class="brand-name">NimmaSsathi</span>
+    </a>
+    <button type="button" id="theme-toggle" class="icon-btn" aria-label="Switch to dark mode" aria-pressed="false"></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">by NimmaSsathi</p>
+      <h1 id="hero-title">GitHub Portfolio <em>Showcase</em></h1>
+      <p class="lede">Type any GitHub username and see their public projects as a clean, shareable portfolio. No login, no token, no backend.</p>
+
+      <form id="search-form" class="search" role="search" autocomplete="off">
+        <label for="username" class="sr-only">GitHub username</label>
+        <div class="search-field">
+          <span class="at" aria-hidden="true">@</span>
+          <input id="username" name="user" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="120" placeholder="octocat" required>
+          <button type="submit" class="btn btn-primary">Show portfolio</button>
+        </div>
+      </form>
+
+      <p class="try">
+        <span>Try</span>
+        <button type="button" class="chip" data-user="octocat">octocat</button>
+        <button type="button" class="chip" data-user="torvalds">torvalds</button>
+        <button type="button" class="chip" data-user="gaearon">gaearon</button>
+        <button type="button" class="chip" data-user="sindresorhus">sindresorhus</button>
+      </p>
+    </section>
+
+    <div id="status" class="sr-only" role="status" aria-live="polite"></div>
+    <div id="message" class="message-wrap"></div>
+
+    <section id="intro" class="intro" aria-label="How it works">
+      <ol class="steps">
+        <li><strong>Search</strong><span>Enter a GitHub username or paste a profile link.</span></li>
+        <li><strong>Browse</strong><span>Filter by language or topic, search by keyword, sort by stars or recency.</span></li>
+        <li><strong>Share</strong><span>Copy the address bar: <code>?user=octocat</code> opens the same portfolio for anyone.</span></li>
+      </ol>
+    </section>
+
+    <section id="results" class="results" hidden aria-live="off">
+      <div id="profile"></div>
+
+      <form id="controls" class="controls" hidden onsubmit="return false" aria-label="Filter and sort projects">
+        <div class="field field-grow">
+          <label for="f-q">Search projects</label>
+          <input id="f-q" type="search" placeholder="Name, description, topic…" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="f-lang">Language</label>
+          <select id="f-lang"><option value="">All languages</option></select>
+        </div>
+        <div class="field">
+          <label for="f-topic">Topic</label>
+          <select id="f-topic"><option value="">All topics</option></select>
+        </div>
+        <div class="field">
+          <label for="f-sort">Sort by</label>
+          <select id="f-sort">
+            <option value="stars">Most stars</option>
+            <option value="updated">Recently updated</option>
+            <option value="name">Name (A–Z)</option>
+          </select>
+        </div>
+        <label class="switch" for="f-forks">
+          <input id="f-forks" type="checkbox">
+          <span>Include forks</span>
+        </label>
+      </form>
+
+      <div id="featured"></div>
+      <div id="projects"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><strong>Only public data is used.</strong> This site reads public information from GitHub's REST API directly in your browser. There is no login, no access token, no server and no tracking. Responses are cached on your device for 10 minutes.</p>
+    <p class="fine">Not affiliated with GitHub. Built by NimmaSsathi. Unauthenticated GitHub API access is limited to 60 requests per hour per network.</p>
+  </footer>
+
+  <dialog id="detail" aria-labelledby="detail-title">
+    <div class="dlg-head">
+      <h2 id="detail-title"></h2>
+      <button type="button" class="icon-btn" id="detail-close" aria-label="Close project details"></button>
+    </div>
+    <div class="dlg-body" id="detail-body"></div>
+  </dialog>
+</body>
+</html>
